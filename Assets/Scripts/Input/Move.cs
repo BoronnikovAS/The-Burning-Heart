@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Move : MonoBehaviour
 {
@@ -8,7 +9,15 @@ public class Move : MonoBehaviour
 
     private Vector3 tPosition;
     private bool isMooving = false;
-     
+
+    private NavMeshAgent navMeshAgent;
+
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
+    }
     void Update()
     {    
         if (isMooving)
@@ -30,8 +39,8 @@ public class Move : MonoBehaviour
         Vector3 Look = transform.InverseTransformPoint(tPosition);
         float Angle = Mathf.Atan2(Look.y, Look.x) * Mathf.Rad2Deg;
         transform.Rotate(0, 0, Angle);
-        transform.position = Vector3.MoveTowards(transform.position, tPosition, speed * Time.deltaTime);
-        
+        //transform.position = Vector3.MoveTowards(transform.position, tPosition, speed * Time.deltaTime);
+        navMeshAgent.SetDestination(tPosition);
         if (transform.position == tPosition)
         {
             isMooving = false;
