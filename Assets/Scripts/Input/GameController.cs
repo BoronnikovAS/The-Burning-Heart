@@ -6,7 +6,6 @@ public class GameController : MonoBehaviour
 {
     public GUISkin skin;
     public static List<Unit> selectedUnitList;
-
     
     private Vector2 startPos;
     private Vector2 endPos;    
